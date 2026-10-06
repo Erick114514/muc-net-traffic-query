@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.pyc
+build/
+dist/
+*.spec
+
+# 本地配置与数据（含登录态、设备命名，切勿提交）
+data/
+local.properties
+*.keystore
+
+# Android
+android/.gradle/
+android/app/build/
+android/build/
+.android/
+
+# 系统
+.DS_Store
+Thumbs.db
