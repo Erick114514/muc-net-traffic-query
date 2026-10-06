@@ -14,8 +14,8 @@
 
 | 版本 | 文件 | 说明 |
 |---|---|---|
-| Windows | `民大校园网流量查询_免安装版.zip` | 解压后双击 exe，**免安装 Python** |
-| Android | `民大流量查询_安卓版.zip` | 内含 APK，Android 7.0+ |
+| Windows | `desktop-v1.0.0.zip` | 解压后双击 exe，**免安装 Python** |
+| Android | `android-v1.0.0.zip` | 内含 APK，Android 7.0+ |
 
 ---
 
