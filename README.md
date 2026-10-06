@@ -95,3 +95,9 @@ gradle assembleDebug      # 产物 app/build/outputs/apk/debug/app-debug.apk
 ## 免责声明
 
 本项目仅用于查询**使用者本人账号**的流量使用情况，不修改账号设置、不代他人查询、不涉及对校园网设施的任何探测或绕过行为。请勿将账号密码提供给他人在本工具中使用。
+
+## 许可证
+
+本项目采用 **GNU General Public License v3.0**（GPL-3.0）发布。
+
+你可以自由使用、修改和分发本项目，但**分发衍生作品时必须同样以 GPL-3.0 开源**并提供完整源码。详见 [LICENSE](LICENSE)。
