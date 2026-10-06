@@ -10,10 +10,19 @@
 
 ## 下载
 
-到 [Releases](../../releases) 页面下载：
+**安卓版直接下载 APK（手机浏览器打开即装）：**
+
+https://github.com/Erick114514/muc-net-traffic-query/releases/download/v1.0.0/muc-traffic-query-v1.0.0.apk
+
+其他方式：到 [Releases](../../releases) 页面下载
 
 | 版本 | 文件 | 说明 |
 |---|---|---|
+| Android | `muc-traffic-query-v1.0.0.apk` | 直接安装，Android 7.0+ |
+| Android | `android-v1.0.0.zip` | APK + 安装说明 |
+| Windows | `desktop-v1.0.0.zip` | 解压后双击 exe，**免安装 Python** |
+
+---|---|---|
 | Windows | `desktop-v1.0.0.zip` | 解压后双击 exe，**免安装 Python** |
 | Android | `android-v1.0.0.zip` | 内含 APK，Android 7.0+ |
 
