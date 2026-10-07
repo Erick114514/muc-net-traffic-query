@@ -18,9 +18,11 @@ import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -223,6 +225,7 @@ public class PortalClient {
 
     public List<Session> fetchLogs(String start, String end, Progress progress) throws IOException {
         List<Session> all = new ArrayList<>();
+        Set<String> seenRows = new HashSet<>();
         int page = 1, total = -1;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         while (page <= 400) {
@@ -234,6 +237,7 @@ public class PortalClient {
                 Matcher tm = Pattern.compile("共\\s*(\\d+)\\s*条").matcher(html.replaceAll("<[^>]+>", " "));
                 if (tm.find()) total = Integer.parseInt(tm.group(1));
             }
+            List<Session> pageRows = new ArrayList<>();
             int found = 0;
             Matcher mr = ROW.matcher(html);
             while (mr.find()) {
@@ -254,16 +258,42 @@ public class PortalClient {
                     s.bytes = parseLong(cells.get(4));
                     s.dur = cells.size() > 6 ? parseLong(cells.get(6))
                             : (s.off.getTime() - s.on.getTime()) / 1000;
-                    all.add(s);
+                    pageRows.add(s);
                     found++;
                 } catch (Exception ignored) {
                 }
             }
+
+            if (found == 0) break;
+
+            // Some portal responses ignore the requested page and return the same rows.
+            // Count rows only once across pages and stop when a page adds nothing, so a
+            // repeated first page cannot inflate the report up to the 400-page limit.
+            Set<String> seenBeforePage = new HashSet<>(seenRows);
+            Set<String> pageKeys = new HashSet<>();
+            int added = 0;
+            for (Session s : pageRows) {
+                String key = sessionKey(s);
+                pageKeys.add(key);
+                if (!seenBeforePage.contains(key)) {
+                    all.add(s);
+                    added++;
+                }
+            }
+            seenRows.addAll(pageKeys);
+
             if (progress != null) progress.onProgress(all.size(), total > 0 ? total : all.size());
+            if (added == 0) break;
+            if (total > 0 && all.size() >= total) break;
             if (found < 10) break;
             page++;
         }
         return all;
+    }
+
+    private static String sessionKey(Session s) {
+        return s.on.getTime() + "|" + s.off.getTime() + "|" + s.mac + "|" + s.ip
+                + "|" + s.bytes + "|" + s.dur;
     }
 
     private static long parseLong(String s) {

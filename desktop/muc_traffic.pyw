@@ -239,9 +239,18 @@ class MucClient:
                 rows.append(cells)
         return rows, total
 
+    @staticmethod
+    def _row_key(row):
+        """Stable identity for detecting rows repeated across portal pages."""
+        return (
+            row[0].strip(), row[1].strip(), row[2].strip().lower(),
+            row[3].strip(), row[4].strip(),
+            row[6].strip() if len(row) > 6 else "",
+        )
+
     def fetch_logs(self, start, end, progress=None):
         """start/end: 'YYYY-MM-DD'；返回会话列表"""
-        all_rows, page, total = [], 1, None
+        all_rows, seen_rows, page, total = [], set(), 1, None
         while True:
             url = (f"{BASE}/log/detail?add_time={start}&drop_time={end}"
                    f"&page={page}&per-page={PER_PAGE}")
@@ -251,7 +260,16 @@ class MucClient:
             rows, total = self._parse_page(r.text)
             if not rows:
                 break
-            all_rows.extend(rows)
+
+            # The portal can ignore the page parameter and return old rows again.
+            # Deduplicate across pages and stop when pagination makes no progress.
+            seen_before_page = seen_rows.copy()
+            page_keys = {self._row_key(row) for row in rows}
+            new_rows = [row for row in rows if self._row_key(row) not in seen_before_page]
+            if not new_rows:
+                break
+            all_rows.extend(new_rows)
+            seen_rows.update(page_keys)
             if progress:
                 progress(len(all_rows), total or len(all_rows))
             if total and len(all_rows) >= total:

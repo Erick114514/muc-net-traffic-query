@@ -12,19 +12,16 @@
 
 **安卓版直接下载 APK（手机浏览器打开即装）：**
 
-https://github.com/Erick114514/muc-net-traffic-query/releases/download/v1.0.0/muc-traffic-query-v1.0.0.apk
+https://github.com/Erick114514/muc-net-traffic-query/releases/download/v1.0.1/muc-traffic-query-v1.0.1.apk
 
 其他方式：到 [Releases](../../releases) 页面下载
 
 | 版本 | 文件 | 说明 |
 |---|---|---|
-| Android | `muc-traffic-query-v1.0.0.apk` | 直接安装，Android 7.0+ |
-| Android | `android-v1.0.0.zip` | APK + 安装说明 |
-| Windows | `desktop-v1.0.0.zip` | 解压后双击 exe，**免安装 Python** |
+| Android | `muc-traffic-query-v1.0.1.apk` | 直接安装，Android 7.0+ |
+| Android | `android-v1.0.1.zip` | APK + 安装说明 |
+| Windows | `desktop-v1.0.1.zip` | 解压后双击 exe，**免安装 Python** |
 
----|---|---|
-| Windows | `desktop-v1.0.0.zip` | 解压后双击 exe，**免安装 Python** |
-| Android | `android-v1.0.0.zip` | 内含 APK，Android 7.0+ |
 
 ---
 
@@ -44,7 +41,7 @@ https://github.com/Erick114514/muc-net-traffic-query/releases/download/v1.0.0/mu
 3. 按 MAC 聚合流量、会话、时段分布；读取门户设备备注作为设备名
 4. 生成内联 SVG 图表的 HTML 报告（桌面版可用浏览器打开，手机版在 WebView 内展示）
 
-实现细节：桌面版 Python + requests；安卓版纯 Java + HttpURLConnection（无第三方依赖，APK 仅 60KB 左右）。
+实现细节：桌面版 Python + requests；安卓版纯 Java + HttpURLConnection（无第三方依赖，APK 约 34KB）。
 
 ## 目录结构
 
